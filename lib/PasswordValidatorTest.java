@@ -1,20 +1,62 @@
 package lib;
+import java.lang.*;
 
-public class PasswordValidatorTest{
+
+public class PasswordValidator {
+
+    /**
+     * @param password in string form user.
+     * @return PasswordStrength describe how strong password form user is.
+     */
     
-    public static void run() {
-        System.out.println("--- Running Password Validator Tests ---");
+     public static PasswordStrength validate(String password) { 
         
-        // Test Case 1: รหัสผ่านสั้นควรจะ INVALID
-        PasswordStrength result1 = PasswordValidator.validate("123");
-        if (result1 == PasswordStrength.INVALID) {
-            System.out.println("Test Case 1 Passed: Short password is INVALID.");
-        } else {
-            System.out.println("Test Case 1 FAILED: Expected INVALID but got " + result1);
+        // ส่วนของ Implementation ที่คุณต้องเขียน
+        // ...
+         
+        int minLength = 8; 
+        PasswordStrength strength = null;
+        int count = 0;
+
+        
+        for(int i = 0 ; i < password.length() ; i++){
+            if(Character.isDigit(password.charAt(i)))
+            count++;
         }
 
-        // --- เขียน Test Case อื่นๆ ต่อ ---
 
-        System.out.println("--------------------------------");
+
+         if( password.length() < minLength )
+         strength = PasswordStrength.INVALID;
+        
+         if(password.length() >= minLength)
+         strength = PasswordStrength.WEAK;
+
+         if(password.matches(".*[A-Z].*"))
+         strength = PasswordStrength.MEDIUM;
+         
+         if(password.matches(".*[a-z].*"))
+         strength = PasswordStrength.MEDIUM;
+
+         if(password.matches(".*[A-Z].*") && password.matches(".*[a-z].*"))
+         strength = PasswordStrength.STRONG;
+
+         if(password.matches(".*[A-Z].*") && password.matches(".*[a-z].*"))
+         strength = PasswordStrength.STRONG;
+
+         if((password.matches(".*[A-Z].*") || password.matches(".*[a-z].*")) && (password.matches(".*\\W.*")))
+         strength = PasswordStrength.STRONG;
+
+         if(count < 8)
+         strength = PasswordStrength.INVALID;
+
+         if(password.matches(".*s.*"))
+         strength = PasswordStrength.INVALID;
+
+         if(password == null)
+         strength = PasswordStrength.INVALID;
+         
+         
+          return strength ;
     }
 }
